@@ -10,7 +10,9 @@ $(document).ready(function() {
     $("#searchBtn").on("click", function(event) {
     event.preventDefault();
     var citySearch = $("#searchFormInput").val().trim();
-    savedCities = localStorage.getItem("savedCitiesObj");
+
+    //Retrieving from local storage and updating search result
+    savedCities = localStorage.getItem("savedCitiesArr");
     savedCities = JSON.parse(savedCities);
     if ( !savedCities ){
       savedCities = [];
@@ -20,8 +22,7 @@ $(document).ready(function() {
     console.log(savedCities);
     
     //Saving previous searches to local storage
-    //localStorage.setItem("currentCity", citySearch);
-    localStorage.setItem("savedCitiesObj", JSON.stringify(savedCities));
+    localStorage.setItem("savedCitiesArr", JSON.stringify(savedCities));
 
     $("#savedCityDiv").empty();
     //storedCities = localStorage.getItem(savedCities);
@@ -113,25 +114,20 @@ $(document).ready(function() {
     var forecastHeader = $("<div id='forecastHeader'><h1> 5 Day Forecast: </h></div>");
     $("#cityForecastDiv").append(forecastHeader);  
 
-    for (var i = 0; i < response.list.length; i+8) {
+    for (i = 7; i < response.list.length; i+=8) {
       var forecastIcon = $("<img src='http://openweathermap.org/img/wn/" + response.list[i].weather[0].icon + "@2x.png'/>");
-        console.log(forecastIcon)
       var forecastTemp = response.list[i].main.temp;
-        console.log(forecastTemp)
       var forecastHumidity = response.list[i].main.humidity;
-        console.log(forecastHumidity)
 
       var forecastDateHeader = $("<div id='forecastDateHeader'>");
-      forecastDay = moment.utc(response.daily[i].dt * 1000).format("D MMMM");
-      forecastDateHeader.append($("<p class='forecastDate'>" + forecastDay + "</p>"));
-      console.log(forecastDay)
+      forecastDateHeader.append($("<p class='forecastDate'></p>"));
+      forecastDateHeader.text(moment().add(1, "days").format("dddd D MMM"));
       forecastDateHeader.append(forecastIcon);
 
       var forecast = $("<div id='forecast'</div>");
       forecast.append(forecastDateHeader);
       forecast.append($("<p><span class='forecastTemp'> Temp: </span>" + forecastTemp + "ºC</p>"));
-      forecast.append($("<p><span class='forecastHumidity'> Humidity: </span>" + forecastHumidity + "m/s</p>"));
-      
+      forecast.append($("<p><span class='forecastHumidity'> Humidity: </span>" + forecastHumidity + "%</p>"));
       $("#cityForecastDiv").append($(forecast));
     }
 
@@ -140,7 +136,12 @@ $(document).ready(function() {
   })
 }
 
-  
+//Clear search history
+var clearSearch = function () {
+  localStorage.clear();
+  $("#savedCityDiv").empty();
+}
+$("#clearBtn").on("click", clearSearch);
 
  
 
