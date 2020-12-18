@@ -15,4 +15,4 @@ https://karryns.github.io/Weather-Dashboard/
 
 # ScreenShot
 
-<img src="../assets/Screenshot.png">
+<img src="./assets/Screenshot.png">
