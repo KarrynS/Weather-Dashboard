@@ -20,6 +20,8 @@
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" 
         crossorigin="anonymous"
     />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Francois+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./assets/style.css" />
   </head>
   <body>
@@ -33,14 +35,12 @@
         <form id="inputGroup">
             <label><h4>Search For a City:</h4></label>
             <input id="searchFormInput" type="text" placeholder="Search city">
-            <button id="searchBtn" class="btn searchBtn" title="Search">
+            <button id="searchBtn" class="btn searchBtn" data-toggle="tooltip" title="Search">
                 <i class="fas fa-search"></i>
-            </button>
-            <button id="clearBtn" class="btn clearBtn" title="Clear Search History">
-                Clear Search<!--i class="fas fa-times-circle"></i-->
             </button>
         </form>
         <div id="savedCityDiv"></div>
+        <button id="clearBtn" class="btn clearBtn" title="Clear Search History">Clear Search</button>
       </aside>
 
       <main class="col col-9" id="mainContent">
