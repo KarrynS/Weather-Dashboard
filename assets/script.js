@@ -3,8 +3,8 @@ $(document).ready(function() {
   var APIKey = "2a058d9c1c6b248fc7317f20f31266dc";
   var savedCities = [];
   var today = moment().format('dddd, D MMMM YYYY')
-  var cityInput; 
- 
+  var cityInput = $("#searchFormInput").val().trim();
+
   //Rendering Search Function and adding previous search to list
   function renderSearch () {
     $("#searchBtn").on("click", function(event) {
@@ -37,14 +37,12 @@ $(document).ready(function() {
   //Adding Event Listeners for new city search on form 
   $("#searchBtn").on("click",function () {
     cityInput = $("#searchFormInput").val().trim();
-    console.log("search button" + cityInput)
     newCitySearch();
   });
   
   //Adding Event Listeners on previous searches
   $(document).on("click", ".savedCity", function () {
     cityInput = $(this).attr("data-name");
-    console.log("saved list" +cityInput)
     newCitySearch();
   });
 
@@ -105,7 +103,6 @@ $(document).ready(function() {
       url: "https://api.openweathermap.org/data/2.5/forecast?q=" + cityInput + "&units=metric&appid=" + APIKey,
       method: "GET"
     }).then(function(response) {
-      console.log(response)
 
       //Header for 5 Day forecast
       var forecastHeader = $("<div id='forecastHeader'><h1> 5 Day Forecast: </h></div>");
@@ -130,14 +127,20 @@ $(document).ready(function() {
         forecast.append($("<p><span class='forecastHumidity'> Humidity: </span>" + forecastHumidity + "%</p>"));
         $("#cityForecastDiv").append($(forecast));
         }
+      cityInput = $("#searchFormInput").val("");
       })
     });
   })
+
 }
   //Adding Event Listener for clear search function
   var clearSearch = function () {
     localStorage.clear();
     $("#savedCityDiv").empty();
+    $("#citySearchDiv").empty();
+    $("#cityForecastDiv").empty();
   }
   $("#clearBtn").on("click", clearSearch);
+
+  newCitySearch();
 });
