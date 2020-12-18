@@ -22,8 +22,8 @@ $(document).ready(function() {
     //Saving previous searches to local storage
     localStorage.setItem("savedCities", JSON.stringify(savedCities));
 
+    //Appending previous searches to page 
     $("#savedCityDiv").empty();
-    //storedCities = localStorage.getItem(savedCities);
     for ( i = 0; i < savedCities.length; i++) {
       var savedCity = $("<div class='savedCity'></div");
       savedCity.text(savedCities[i]).attr("data-name", savedCities[i]);
@@ -85,6 +85,7 @@ $(document).ready(function() {
       url: "https://api.openweathermap.org/data/2.5/uvi?lat=" +currentLat+ "&lon=" + currentLon + "&appid=" +APIKey,
       method: "GET"
     }).then(function(response) {
+      //displaying elements to HTML
       var currentIndex = $("<span class='uv'>" + response.value + "</span>");
       var currentIndexDiv = $("<div id='index'>UV Index: </div>");
       currentIndexDiv.append(currentIndex);
@@ -139,5 +140,4 @@ $(document).ready(function() {
     $("#savedCityDiv").empty();
   }
   $("#clearBtn").on("click", clearSearch);
-
 });
