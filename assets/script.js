@@ -2,8 +2,14 @@ $(document).ready(function() {
 
   var APIKey = "2a058d9c1c6b248fc7317f20f31266dc";
   var savedCities = [];
-  var today = moment().format('dddd, D MMMM YYYY')
-  var cityInput = $("#searchFormInput").val().trim();
+  var today = moment().format('dddd, D MMMM YYYY');
+  var lastSearch = JSON.parse(localStorage.getItem("savedCities"));
+  var cityInput;
+  if (lastSearch) {
+    cityInput = JSON.parse(localStorage.getItem("savedCities"))[lastSearch.length - 1];
+  } else {
+    cityInput = $("#searchFormInput").val().trim();
+  }
 
   //Rendering Search Function and adding previous search to list
   function renderSearch () {
